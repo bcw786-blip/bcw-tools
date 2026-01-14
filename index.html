@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCW Pro Tools</title>
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <style>
+        :root { --bg: #0a101e; --card: #16243d; --accent: #ffd700; --text: #ffffff; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; text-align: center; }
+        .header { background: linear-gradient(135deg, #1e3a8a, #0f172a); padding: 20px; border-radius: 15px; border: 1px solid var(--accent); margin-bottom: 15px; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .tool-btn { background: var(--card); border: 1px solid #334155; padding: 25px 5px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 15px; display: block; }
+        .card { background: var(--card); border-radius: 15px; padding: 15px; margin-top: 15px; border: 1px solid #475569; }
+        .hidden { display: none; }
+        .action-btn { background: var(--accent); color: #000; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 5px; font-size: 16px; }
+        .file-item { background: #1e293b; padding: 12px; margin-bottom: 8px; border-radius: 8px; border-right: 5px solid var(--accent); text-align: right; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>BCW Pro Tools</h1>
+        <div style="font-size:14px; color: gold;">بلائنڈ کمیونیکیشن ورلڈ (BCW786)</div>
+        <div style="font-size:12px; opacity: 0.8; margin-top:5px;">Our Thinking, Your Future</div>
+    </div>
+
+    <div id="main-menu">
+        <div class="btn-grid">
+            <a href="https://youtube.com/@blindcommunicationworld?si=c9Ud5rFoFIVDcKSL" class="tool-btn" target="_blank">📺 یوٹیوب چینل</a>
+            <a href="https://chat.whatsapp.com/GdiPEZUJaSeK3O4hQbQaeU" class="tool-btn" target="_blank">💬 واٹس ایپ گروپ</a>
+            <div class="tool-btn" onclick="showUI('player-ui')">🎵 سمارٹ پلیئر</div>
+            <div class="tool-btn" onclick="showUI('recorder-ui')">🎤 آڈیو ریکارڈر</div>
+            <div class="tool-btn" onclick="showUI('research-ui')">🔍 ریسرچ ٹول</div>
+            <div class="tool-btn" onclick="showUI('tts-ui')">🗣️ وائس ٹولز</div>
+        </div>
+        <div class="tool-btn" style="margin-top:10px; background: #1e3a8a;" onclick="showUI('notepad-ui')">📝 پرو نوٹ پیڈ</div>
+    </div>
+
+    <div id="player-ui" class="card hidden">
+        <h3>سمارٹ پلیئر پرو</h3>
+        <audio id="main-player" controls style="width:100%"></audio>
+        <input type="file" id="file-in" class="hidden" onchange="playMedia(event)">
+        <button class="action-btn" onclick="document.getElementById('file-in').click()">فائل مینیجر کھولیں</button>
+        <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">واپس</button>
+    </div>
+
+    <script>
+        function showUI(id) { document.getElementById('main-menu').classList.add('hidden'); document.getElementById(id).classList.remove('hidden'); }
+        function goHome() { document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); document.getElementById('main-menu').classList.remove('hidden'); }
+
+        function playMedia(e) { 
+            const player = document.getElementById('main-player');
+            player.src = URL.createObjectURL(e.target.files[0]);
+            player.play();
+        }
+
+        // ریسرچ ٹول کے لیے فنکشن
+        function doResearch() {
+            let q = document.getElementById('res-query').value;
+            window.open('https://google.com/search?q=' + q, '_system');
+        }
+    </script>
+</body>
+</html>
+
