@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,35 +14,35 @@
         .card { background: var(--card); border-radius: 15px; padding: 15px; margin-top: 15px; border: 1px solid #475569; }
         .hidden { display: none; }
         .action-btn { background: var(--accent); color: #000; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 5px; font-size: 16px; }
-        .file-item { background: #1e293b; padding: 12px; margin-bottom: 8px; border-radius: 8px; border-right: 5px solid var(--accent); text-align: right; }
+        .file-item { background: #1e293b; padding: 12px; margin-bottom: 8px; border-radius: 8px; border-right: 5px solid var(--accent); text-align: left; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>BCW Pro Tools</h1>
-        <div style="font-size:14px; color: gold;">بلائنڈ کمیونیکیشن ورلڈ (BCW786)</div>
+        <div style="font-size:14px; color: gold;">Blind Communication World (BCW786)</div>
         <div style="font-size:12px; opacity: 0.8; margin-top:5px;">Our Thinking, Your Future</div>
     </div>
 
     <div id="main-menu">
         <div class="btn-grid">
-            <a href="https://youtube.com/@blindcommunicationworld?si=c9Ud5rFoFIVDcKSL" class="tool-btn" target="_blank">📺 یوٹیوب چینل</a>
-            <a href="https://chat.whatsapp.com/GdiPEZUJaSeK3O4hQbQaeU" class="tool-btn" target="_blank">💬 واٹس ایپ گروپ</a>
-            <div class="tool-btn" onclick="showUI('player-ui')">🎵 سمارٹ پلیئر</div>
-            <div class="tool-btn" onclick="showUI('recorder-ui')">🎤 آڈیو ریکارڈر</div>
-            <div class="tool-btn" onclick="showUI('research-ui')">🔍 ریسرچ ٹول</div>
-            <div class="tool-btn" onclick="showUI('tts-ui')">🗣️ وائس ٹولز</div>
+            <a href="https://youtube.com/@blindcommunicationworld?si=c9Ud5rFoFIVDcKSL" class="tool-btn" target="_blank">YouTube Channel</a>
+            <a href="https://chat.whatsapp.com/GdiPEZUJaSeK3O4hQbQaeU" class="tool-btn" target="_blank">WhatsApp Group</a>
+            <div class="tool-btn" role="button" onclick="showUI('player-ui')">Smart Player</div>
+            <div class="tool-btn" role="button" onclick="showUI('recorder-ui')">Audio Recorder</div>
+            <div class="tool-btn" role="button" onclick="showUI('research-ui')">Research Tool</div>
+            <div class="tool-btn" role="button" onclick="showUI('tts-ui')">Voice Tools</div>
         </div>
-        <div class="tool-btn" style="margin-top:10px; background: #1e3a8a;" onclick="showUI('notepad-ui')">📝 پرو نوٹ پیڈ</div>
+        <div class="tool-btn" style="margin-top:10px; background: #1e3a8a;" role="button" onclick="showUI('notepad-ui')">Pro Notepad</div>
     </div>
 
     <div id="player-ui" class="card hidden">
-        <h3>سمارٹ پلیئر پرو</h3>
+        <h3>Smart Player Pro</h3>
         <audio id="main-player" controls style="width:100%"></audio>
         <input type="file" id="file-in" class="hidden" onchange="playMedia(event)">
-        <button class="action-btn" onclick="document.getElementById('file-in').click()">فائل مینیجر کھولیں</button>
-        <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">واپس</button>
+        <button class="action-btn" onclick="document.getElementById('file-in').click()">Open File Manager</button>
+        <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back</button>
     </div>
 
     <script>
@@ -55,7 +55,6 @@
             player.play();
         }
 
-        // ریسرچ ٹول کے لیے فنکشن
         function doResearch() {
             let q = document.getElementById('res-query').value;
             window.open('https://google.com/search?q=' + q, '_system');
@@ -63,4 +62,3 @@
     </script>
 </body>
 </html>
-
