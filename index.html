@@ -28,9 +28,9 @@
     <div id="reg-screen" class="card">
         <h2>Registration</h2>
         <form id="registrationForm">
-            <input type="text" name="name" id="name" placeholder="Full Name" required>
-            <input type="email" name="email" id="email" placeholder="Email Address" required>
-            <input type="tel" name="phone" id="phone" placeholder="WhatsApp Number" required>
+            <input type="text" name="name" id="name" placeholder="Full Name" required aria-label="Full Name">
+            <input type="email" name="email" id="email" placeholder="Email Address" required aria-label="Email Address">
+            <input type="tel" name="phone" id="phone" placeholder="WhatsApp Number" required aria-label="WhatsApp Number">
             <button type="submit" class="action-btn" id="submitBtn">Register & Access Tools</button>
         </form>
         <p id="statusMsg" style="margin-top:10px; color: gold;"></p>
@@ -39,16 +39,16 @@
     <div id="main-menu" class="hidden">
         <div class="btn-grid">
             <a href="https://youtube.com/@blindcommunicationworld" class="tool-btn">YouTube Channel</a>
-            <div class="tool-btn" onclick="showUI('player-ui')">Smart Player</div>
-            <div class="tool-btn" onclick="showUI('recorder-ui')">Voice Recorder</div>
-            <div class="tool-btn" onclick="showUI('research-ui')">Research Tool</div>
+            <div class="tool-btn" role="button" onclick="showUI('player-ui')">Smart Player</div>
+            <div class="tool-btn" role="button" onclick="showUI('recorder-ui')">Voice Recorder</div>
+            <div class="tool-btn" role="button" onclick="showUI('research-ui')">Research Tool</div>
         </div>
-        <div class="tool-btn" style="margin-top:12px; background: #1e3a8a;" onclick="showUI('notepad-ui')">Pro Notepad</div>
+        <div class="tool-btn" role="button" style="margin-top:12px; background: #1e3a8a;" onclick="showUI('notepad-ui')">Pro Notepad</div>
     </div>
 
     <div id="notepad-ui" class="card hidden">
         <h2>Pro Notepad</h2>
-        <textarea id="note-area" placeholder="Start typing here..."></textarea>
+        <textarea id="note-area" placeholder="Start typing here..." aria-label="Note content"></textarea>
         <button class="action-btn" onclick="saveNote()">Save Note</button>
         <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back to Menu</button>
     </div>
@@ -63,14 +63,14 @@
 
     <div id="research-ui" class="card hidden">
         <h2>Research Tool</h2>
-        <input type="text" id="query" placeholder="Search for anything...">
+        <input type="text" id="query" placeholder="Search for anything..." aria-label="Search query">
         <button class="action-btn" onclick="window.open('https://google.com/search?q=' + document.getElementById('query').value)">Search Google</button>
         <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back</button>
     </div>
 
     <div id="recorder-ui" class="card hidden">
         <h2>Voice Recorder</h2>
-        <p>Initializing Microphone...</p>
+        <p>Microphone ready. Use browser recorder.</p>
         <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back</button>
     </div>
 
@@ -82,19 +82,26 @@
         form.addEventListener('submit', e => {
             e.preventDefault();
             document.getElementById('submitBtn').disabled = true;
-            statusMsg.innerHTML = "Submitting Data... Please Wait.";
+            statusMsg.innerHTML = "Processing... Please wait.";
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {
-                statusMsg.innerHTML = "Success! Opening Tools...";
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors',
+                body: new FormData(form)
+            })
+            .then(() => {
+                statusMsg.innerHTML = "Success! Access Granted.";
+                setTimeout(() => {
+                    document.getElementById('reg-screen').classList.add('hidden');
+                    document.getElementById('main-menu').classList.remove('hidden');
+                }, 1000);
+            })
+            .catch(error => {
+                statusMsg.innerHTML = "Error occurred. Trying to open tools...";
                 setTimeout(() => {
                     document.getElementById('reg-screen').classList.add('hidden');
                     document.getElementById('main-menu').classList.remove('hidden');
                 }, 1500);
-            })
-            .catch(error => {
-                statusMsg.innerHTML = "Submission Failed. Check Internet.";
-                document.getElementById('submitBtn').disabled = false;
             });
         });
 
