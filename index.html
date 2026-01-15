@@ -3,61 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCW Pro Tools</title>
-    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <title>Blind Communication World - Tools</title>
     <style>
         :root { --bg: #0a101e; --card: #16243d; --accent: #ffd700; --text: #ffffff; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; text-align: center; }
-        .header { background: linear-gradient(135deg, #1e3a8a, #0f172a); padding: 20px; border-radius: 15px; border: 1px solid var(--accent); margin-bottom: 15px; }
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .tool-btn { background: var(--card); border: 1px solid #334155; padding: 25px 5px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 15px; display: block; }
-        .card { background: var(--card); border-radius: 15px; padding: 15px; margin-top: 15px; border: 1px solid #475569; }
-        .hidden { display: none; }
-        .action-btn { background: var(--accent); color: #000; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 5px; font-size: 16px; }
-        .file-item { background: #1e293b; padding: 12px; margin-bottom: 8px; border-radius: 8px; border-right: 5px solid var(--accent); text-align: left; }
+        body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; text-align: center; }
+        .header { background: linear-gradient(135deg, #1e3a8a, #0f172a); padding: 25px; border-radius: 15px; border: 1px solid var(--accent); margin-bottom: 15px; }
+        .tagline { color: var(--accent); font-size: 14px; margin-top: 5px; font-weight: bold; }
+        .card { background: var(--card); border-radius: 15px; padding: 20px; margin-top: 10px; border: 1px solid #475569; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .tool-btn { background: #1e293b; border: 1px solid #475569; padding: 25px 5px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; text-decoration: none; display: block; font-size: 16px; }
+        .action-btn { width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; border: none; background: var(--accent); color: #000; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .hidden { display: none !important; }
+        input { width: 90%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #444; background: #000; color: #fff; text-align: center; }
+        textarea { width: 90%; height: 150px; border-radius: 10px; padding: 10px; margin-top: 10px; background: #000; color: #fff; border: 1px solid #444; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>BCW Pro Tools</h1>
-        <div style="font-size:14px; color: gold;">Blind Communication World (BCW786)</div>
-        <div style="font-size:12px; opacity: 0.8; margin-top:5px;">Our Thinking, Your Future</div>
+        <h1 style="margin:0;">Blind Communication World</h1>
+        <div class="tagline">Providing Solutions for Everyone</div>
     </div>
 
-    <div id="main-menu">
+    <div id="reg-screen" class="card">
+        <h2>Registration</h2>
+        <form id="registrationForm">
+            <input type="text" name="name" id="name" placeholder="Full Name" required>
+            <input type="email" name="email" id="email" placeholder="Email Address" required>
+            <input type="tel" name="phone" id="phone" placeholder="WhatsApp Number" required>
+            <button type="submit" class="action-btn" id="submitBtn">Register & Access Tools</button>
+        </form>
+        <p id="statusMsg" style="margin-top:10px; color: gold;"></p>
+    </div>
+
+    <div id="main-menu" class="hidden">
         <div class="btn-grid">
-            <a href="https://youtube.com/@blindcommunicationworld?si=c9Ud5rFoFIVDcKSL" class="tool-btn" target="_blank">YouTube Channel</a>
-            <a href="https://chat.whatsapp.com/GdiPEZUJaSeK3O4hQbQaeU" class="tool-btn" target="_blank">WhatsApp Group</a>
-            <div class="tool-btn" role="button" onclick="showUI('player-ui')">Smart Player</div>
-            <div class="tool-btn" role="button" onclick="showUI('recorder-ui')">Audio Recorder</div>
-            <div class="tool-btn" role="button" onclick="showUI('research-ui')">Research Tool</div>
-            <div class="tool-btn" role="button" onclick="showUI('tts-ui')">Voice Tools</div>
+            <a href="https://youtube.com/@blindcommunicationworld" class="tool-btn">YouTube Channel</a>
+            <div class="tool-btn" onclick="showUI('player-ui')">Smart Player</div>
+            <div class="tool-btn" onclick="showUI('recorder-ui')">Voice Recorder</div>
+            <div class="tool-btn" onclick="showUI('research-ui')">Research Tool</div>
         </div>
-        <div class="tool-btn" style="margin-top:10px; background: #1e3a8a;" role="button" onclick="showUI('notepad-ui')">Pro Notepad</div>
+        <div class="tool-btn" style="margin-top:12px; background: #1e3a8a;" onclick="showUI('notepad-ui')">Pro Notepad</div>
+    </div>
+
+    <div id="notepad-ui" class="card hidden">
+        <h2>Pro Notepad</h2>
+        <textarea id="note-area" placeholder="Start typing here..."></textarea>
+        <button class="action-btn" onclick="saveNote()">Save Note</button>
+        <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back to Menu</button>
     </div>
 
     <div id="player-ui" class="card hidden">
-        <h3>Smart Player Pro</h3>
+        <h2>Smart Player</h2>
         <audio id="main-player" controls style="width:100%"></audio>
         <input type="file" id="file-in" class="hidden" onchange="playMedia(event)">
-        <button class="action-btn" onclick="document.getElementById('file-in').click()">Open File Manager</button>
+        <button class="action-btn" onclick="document.getElementById('file-in').click()">Choose Audio File</button>
+        <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back</button>
+    </div>
+
+    <div id="research-ui" class="card hidden">
+        <h2>Research Tool</h2>
+        <input type="text" id="query" placeholder="Search for anything...">
+        <button class="action-btn" onclick="window.open('https://google.com/search?q=' + document.getElementById('query').value)">Search Google</button>
+        <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back</button>
+    </div>
+
+    <div id="recorder-ui" class="card hidden">
+        <h2>Voice Recorder</h2>
+        <p>Initializing Microphone...</p>
         <button class="action-btn" style="background:#444; color:#fff;" onclick="goHome()">Back</button>
     </div>
 
     <script>
-        function showUI(id) { document.getElementById('main-menu').classList.add('hidden'); document.getElementById(id).classList.remove('hidden'); }
-        function goHome() { document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); document.getElementById('main-menu').classList.remove('hidden'); }
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyXU3TuVQqiRREUVnNN7nWUacLc7jkVZAAcqoaMj9HMHHWLVTqK-uNcAqJIhvpoEZ0xhg/exec';
+        const form = document.getElementById('registrationForm');
+        const statusMsg = document.getElementById('statusMsg');
 
-        function playMedia(e) { 
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            document.getElementById('submitBtn').disabled = true;
+            statusMsg.innerHTML = "Submitting Data... Please Wait.";
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                statusMsg.innerHTML = "Success! Opening Tools...";
+                setTimeout(() => {
+                    document.getElementById('reg-screen').classList.add('hidden');
+                    document.getElementById('main-menu').classList.remove('hidden');
+                }, 1500);
+            })
+            .catch(error => {
+                statusMsg.innerHTML = "Submission Failed. Check Internet.";
+                document.getElementById('submitBtn').disabled = false;
+            });
+        });
+
+        function showUI(id) {
+            document.getElementById('main-menu').classList.add('hidden');
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function goHome() {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('main-menu').classList.remove('hidden');
+        }
+
+        function playMedia(e) {
             const player = document.getElementById('main-player');
             player.src = URL.createObjectURL(e.target.files[0]);
             player.play();
         }
 
-        function doResearch() {
-            let q = document.getElementById('res-query').value;
-            window.open('https://google.com/search?q=' + q, '_system');
+        function saveNote() {
+            const text = document.getElementById('note-area').value;
+            if(text) {
+                localStorage.setItem('bcw_note', text);
+                alert('Note saved to device!');
+            }
         }
     </script>
 </body>
