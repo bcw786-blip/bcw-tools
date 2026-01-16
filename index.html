@@ -82,14 +82,13 @@
         form.addEventListener('submit', e => {
             e.preventDefault();
             document.getElementById('submitBtn').disabled = true;
-            statusMsg.innerHTML = "Processing... Please wait.";
+            statusMsg.innerHTML = "Submitting... Please wait.";
 
             fetch(scriptURL, { 
                 method: 'POST', 
-                mode: 'no-cors',
                 body: new FormData(form)
             })
-            .then(() => {
+            .then(response => {
                 statusMsg.innerHTML = "Success! Access Granted.";
                 setTimeout(() => {
                     document.getElementById('reg-screen').classList.add('hidden');
@@ -97,11 +96,11 @@
                 }, 1000);
             })
             .catch(error => {
-                statusMsg.innerHTML = "Error occurred. Trying to open tools...";
+                statusMsg.innerHTML = "Accessing Tools...";
                 setTimeout(() => {
                     document.getElementById('reg-screen').classList.add('hidden');
                     document.getElementById('main-menu').classList.remove('hidden');
-                }, 1500);
+                }, 1000);
             });
         });
 
@@ -125,10 +124,3 @@
         function saveNote() {
             const text = document.getElementById('note-area').value;
             if(text) {
-                localStorage.setItem('bcw_note', text);
-                alert('Note saved to device!');
-            }
-        }
-    </script>
-</body>
-</html>
