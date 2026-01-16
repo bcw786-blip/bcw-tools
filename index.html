@@ -75,7 +75,7 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxsgCUR9HDrAOuvtBY4XJaRFcavAlVHAL7qxGQrYlkSZaW8_oZW_Gw_kypXXvtIUagPlg/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyOM2Ywd4uYInG0EUazQqCT_IXJzfAznxWS2nmzGWvaHDsmgoIV-4X_hzF9Lee8jtEqGw/exec';
         const form = document.getElementById('registrationForm');
         const statusMsg = document.getElementById('statusMsg');
 
@@ -117,10 +117,19 @@
 
         function playMedia(e) {
             const player = document.getElementById('main-player');
-            player.src = URL.createObjectURL(e.target.files[0]);
-            player.play();
+            if (e.target.files[0]) {
+                player.src = URL.createObjectURL(e.target.files[0]);
+                player.play();
+            }
         }
 
         function saveNote() {
             const text = document.getElementById('note-area').value;
             if(text) {
+                localStorage.setItem('bcw_note', text);
+                alert('Note saved to device!');
+            }
+        }
+    </script>
+</body>
+</html>
