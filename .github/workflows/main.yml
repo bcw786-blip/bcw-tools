@@ -1,0 +1,30 @@
+name: Build BCW Ultimate App
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Build WebToAPK
+        run: |
+          npx webview-apk-generator \
+          --url "https://bcw786-blip.github.io/bcw-tools/" \
+          --name "BCW Tools" \
+          --package "com.bcw.tools" \
+          --icon "icon.png" \
+          --permissions "INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,MANAGE_EXTERNAL_STORAGE,CAMERA,RECORD_AUDIO,MODIFY_AUDIO_SETTINGS,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,ACCESS_BACKGROUND_LOCATION,BLUETOOTH,BLUETOOTH_ADMIN,BLUETOOTH_CONNECT,BLUETOOTH_SCAN,VIBRATE,WAKE_LOCK,FOREGROUND_SERVICE,RECEIVE_BOOT_COMPLETED"
+          
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: BCW-Pro-App
+          path: ./*.apk
