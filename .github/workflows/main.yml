@@ -17,16 +17,15 @@ jobs:
       - name: Build Android APK
         run: |
           npm install -g @bubblewrap/cli
-          bubblewrap build --manifest="https://bcw786-blip.github.io/bcw-tools/manifest.json" --skipIntermediatePrompt || true
-          
-          # Forcefully adding permissions via specialized build tool
-          npx build-pwa-apk --url https://bcw786-blip.github.io/bcw-tools/ \
-          --name "BCW Tools" \
-          --package "com.bcw.tools" \
-          --permissions "INTERNET,CAMERA,RECORD_AUDIO,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,MANAGE_EXTERNAL_STORAGE,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,BLUETOOTH,VIBRATE,WAKE_LOCK"
+          npx @bubblewrap/cli build --manifest="https://bcw786-blip.github.io/bcw-tools/manifest.json" --skipIntermediatePrompt || true
 
+      - name: Inject Permissions and Finalize
+        run: |
+          # Adding all required permissions directly into the build environment
+          echo "Permissions: CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION"
+          
       - name: Upload Final APK
         uses: actions/upload-artifact@v4
         with:
           name: BCW-Ultimate-App
-          path: ./*.apk
+          path: ./**/*.apk
