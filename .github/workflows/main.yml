@@ -8,21 +8,48 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build APK
+      - name: Create Web-to-APK Structure
         run: |
-          npx build-pwa-apk --url https://bcw786-blip.github.io/bcw-tools/ \
-          --name "BCW Tools" \
-          --package "com.bcw.tools" \
-          --permissions "INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,MANAGE_EXTERNAL_STORAGE,CAMERA,RECORD_AUDIO,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,BLUETOOTH"
+          mkdir -p android/app/src/main
+          echo '<?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bcw.tools">
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+              <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+              <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+              <uses-permission android:name="android.permission.CAMERA" />
+              <uses-permission android:name="android.permission.RECORD_AUDIO" />
+              <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+              <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+              <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+              <uses-permission android:name="android.permission.BLUETOOTH" />
+              <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+              <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+              <uses-permission android:name="android.permission.VIBRATE" />
+              <application android:label="BCW Tools" android:hardwareAccelerated="true">
+                  <activity android:name=".MainActivity" android:exported="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>' > android/app/src/main/AndroidManifest.xml
 
-      - name: Upload APK
+      - name: Build APK via CLI
+        run: |
+          npm install -g @bubblewrap/cli
+          yes | bubblewrap init --manifest="https://bcw786-blip.github.io/bcw-tools/manifest.json" || true
+          npx build-pwa-apk --url https://bcw786-blip.github.io/bcw-tools/ --name "BCW Tools"
+
+      - name: Upload Final APK
         uses: actions/upload-artifact@v4
         with:
-          name: BCW-Pro-App
+          name: BCW-Ultimate-App
           path: ./*.apk
