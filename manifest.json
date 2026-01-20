@@ -1,15 +1,35 @@
 {
   "name": "BCW Tools",
-  "short_name": "BCW",
+  "short_name": "BCWTools",
   "start_url": "https://bcw786-blip.github.io/bcw-tools/",
+  "scope": "https://bcw786-blip.github.io/bcw-tools/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
+  "description": "Tools for BCW users",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon.png",
+      "src": "icons/2.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/1.png",
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "permissions": [
+    "internet",
+    "camera",
+    "microphone",
+    "geolocation",
+    "notifications",
+    "background-sync",
+    "storage",
+    "clipboard-read",
+    "clipboard-write"
   ]
 }
