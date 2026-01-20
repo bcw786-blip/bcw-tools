@@ -28,14 +28,24 @@ jobs:
       - name: Install Bubblewrap
         run: npm install -g @bubblewrap/cli
 
+      - name: Clean apk directory
+        run: rm -rf apk
+
       - name: Initialize Bubblewrap non-interactive
         run: |
-          yes "n" | bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --no-analytics --skipPrompt
+          bubblewrap init \
+            --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json \
+            --directory=apk \
+            --no-analytics \
+            --noPrompt \
+            --verbose
+        timeout-minutes: 5
 
       - name: Build APK
         run: |
           cd apk
-          bubblewrap build --no-analytics
+          bubblewrap build --no-analytics --verbose
+        timeout-minutes: 10
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
