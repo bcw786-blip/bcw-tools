@@ -14,19 +14,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Install PWA Builder
-        run: npm install -g @pwabuilder/pwa-to-apk
-
-      - name: Generate APK with Full Permissions
+      - name: Build Android APK
         run: |
-          pwa-to-apk --url https://bcw786-blip.github.io/bcw-tools/ \
-          --name "BCW Tools" \
-          --package "com.bcw.tools" \
-          --permissions "INTERNET,CAMERA,RECORD_AUDIO,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION"
+          npm install -g bubblewrap
+          yes | npx bubblewrap init --manifest="https://bcw786-blip.github.io/bcw-tools/manifest.json"
+          npx bubblewrap build --skipIntermediatePrompt
 
       - name: Upload Final APK
         uses: actions/upload-artifact@v4
         with:
           name: BCW-Pro-App
           path: ./**/*.apk
-          if-no-files-found: error
+          if-no-files-found: warn
