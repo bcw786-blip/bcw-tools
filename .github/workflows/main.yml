@@ -28,9 +28,12 @@ jobs:
       - name: Install Bubblewrap
         run: npm install -g @bubblewrap/cli
 
-      - name: Generate APK
+      - name: Initialize Bubblewrap non-interactive
         run: |
-          bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --skipPrompt --no-analytics
+          yes "n" | bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --no-analytics
+
+      - name: Build APK
+        run: |
           cd apk
           bubblewrap build --no-analytics
 
