@@ -30,7 +30,7 @@ jobs:
 
       - name: Initialize Bubblewrap non-interactive
         run: |
-          yes "n" | bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --no-analytics
+          yes "n" | bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --no-analytics --skipPrompt
 
       - name: Build APK
         run: |
