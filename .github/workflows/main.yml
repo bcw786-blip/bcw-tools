@@ -30,9 +30,9 @@ jobs:
 
       - name: Generate APK
         run: |
-          bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --skipPrompt
+          bubblewrap init --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json --directory=apk --skipPrompt --no-analytics
           cd apk
-          bubblewrap build
+          bubblewrap build --no-analytics
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
