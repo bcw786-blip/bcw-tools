@@ -32,6 +32,8 @@ jobs:
         run: rm -rf apk
 
       - name: Initialize Bubblewrap non-interactive
+        env:
+          JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
         run: |
           bubblewrap init \
             --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json \
