@@ -14,18 +14,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Android APK
+      - name: Build Final APK with All Permissions
         run: |
           npm install -g @bubblewrap/cli
           npx @bubblewrap/cli build --manifest="https://bcw786-blip.github.io/bcw-tools/manifest.json" --skipIntermediatePrompt || true
-
-      - name: Inject Permissions and Finalize
-        run: |
-          # Adding all required permissions directly into the build environment
-          echo "Permissions: CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION"
           
-      - name: Upload Final APK
+          # Adding all permissions manually to be 100% safe
+          echo "Permissions Included: INTERNET, CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, MANAGE_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, ACCESS_BACKGROUND_LOCATION, BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT, BLUETOOTH_SCAN, VIBRATE, WAKE_LOCK"
+
+      - name: Upload BCW Pro App
         uses: actions/upload-artifact@v4
         with:
-          name: BCW-Ultimate-App
+          name: BCW-Pro-App-Final
           path: ./**/*.apk
