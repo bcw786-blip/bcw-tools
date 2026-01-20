@@ -14,16 +14,19 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Final APK with All Permissions
-        run: |
-          npm install -g @bubblewrap/cli
-          npx @bubblewrap/cli build --manifest="https://bcw786-blip.github.io/bcw-tools/manifest.json" --skipIntermediatePrompt || true
-          
-          # Adding all permissions manually to be 100% safe
-          echo "Permissions Included: INTERNET, CAMERA, RECORD_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, MANAGE_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, ACCESS_BACKGROUND_LOCATION, BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT, BLUETOOTH_SCAN, VIBRATE, WAKE_LOCK"
+      - name: Install PWA Builder
+        run: npm install -g @pwabuilder/pwa-to-apk
 
-      - name: Upload BCW Pro App
+      - name: Generate APK with Full Permissions
+        run: |
+          pwa-to-apk --url https://bcw786-blip.github.io/bcw-tools/ \
+          --name "BCW Tools" \
+          --package "com.bcw.tools" \
+          --permissions "INTERNET,CAMERA,RECORD_AUDIO,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION"
+
+      - name: Upload Final APK
         uses: actions/upload-artifact@v4
         with:
-          name: BCW-Pro-App-Final
+          name: BCW-Pro-App
           path: ./**/*.apk
+          if-no-files-found: error
