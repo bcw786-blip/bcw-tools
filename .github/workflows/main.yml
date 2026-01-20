@@ -23,17 +23,20 @@ jobs:
             "display": "standalone",
             "background_color": "#ffffff",
             "theme_color": "#000000",
-            "icons": [{"src": "icon.png", "sizes": "512x512", "type": "image/png"}]
+            "icons": [{"src": "icon.png", "sizes": "512x512", "type": "image/png"}],
+            "permissions": [
+              "camera",
+              "microphone",
+              "geolocation",
+              "storage",
+              "notifications"
+            ]
           }' > local_manifest.json
 
       - name: Build APK Locally
         run: |
           npm install -g @bubblewrap/cli
           npx bubblewrap build --manifest=local_manifest.json --skipIntermediatePrompt || true
-
-      - name: Final Permission Check
-        run: |
-          echo "Injecting: CAMERA, RECORD_AUDIO, STORAGE, LOCATION"
 
       - name: Upload BCW App
         uses: actions/upload-artifact@v4
