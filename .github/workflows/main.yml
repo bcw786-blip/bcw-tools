@@ -25,8 +25,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Bubblewrap
-        run: npm install -g @bubblewrap/cli
+      - name: Install Bubblewrap (latest)
+        run: npm install -g @bubblewrap/cli@latest
 
       - name: Clean apk directory
         run: rm -rf apk
@@ -34,8 +34,9 @@ jobs:
       - name: Initialize Bubblewrap non-interactive
         env:
           JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
+          PATH: /usr/lib/jvm/temurin-17-jdk-amd64/bin:${{ env.PATH }}
         run: |
-          bubblewrap init \
+          yes "n" | bubblewrap init \
             --manifest=https://bcw786-blip.github.io/bcw-tools/manifest.json \
             --directory=apk \
             --no-analytics \
